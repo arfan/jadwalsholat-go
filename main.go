@@ -1,12 +1,18 @@
 package main
 
 import "fmt"
-
+import "math"
 
 var (
-	n int
-	a int
-	z float64
+	n   int
+	a   int
+	z   float64
+	rad float64
+
+	lamd float64
+	phi  float64
+
+	t float64
 )
 
 func main() {
@@ -42,60 +48,75 @@ func main() {
 
 	n0 := 0
 	for key, value := range bulan {
-		for k:=1;k<=value;k++ {
-			n := n0+k
+		for k := 1; k <= value; k++ {
+			n := n0 + k
 			a := 6
-			z := 110 * rad 
+			z := 110 * rad
 			goSub()
 		}
 	}
 }
 
 func goSub() {
-	t = N + (A - LAMD) / 24
+	t = n + (a-lamd)/24
+	m = (.9856*t - 3.289) * RAD
 
-   M = (.9856 * T - 3.289) * RAD
+	l = m + 1.916*rad*math.Sin(m) + .02*rad*math.Sin(2*m) + 282.634*rad
+	lh = l / 3.14159 * 12
+	ql = int(lh/6) + 1
 
-   L = M + 1.916 * RAD * SIN(M) + .02 * RAD * SIN(2 * M) + 282.634 * RAD
+	if int(ql/2)*2-ql != 0 {
+		ql = ql - 1
+	}
 
-   LH = L / 3.14159 * 12: QL = INT(LH / 6) + 1
+	ra = math.Atan(.91746*math.Tan(l)) / 3.14159 * 12
 
-   IF INT(QL / 2) * 2 - QL <> 0 THEN QL = QL - 1
+	ra = ra + ql*6
 
-	RA = ATN(.91746 * TAN(L)) / 3.14159 * 12
+	sind = .39782 * math.Sin(l)
 
-   RA = RA + QL * 6
+	cosd = Math.Sqrt(1 - sind*sind)
 
-   SIND = .39782 * SIN(L)
+	dek = Math.Atan(sind / cosd)
 
-   COSD = SQR(1 - SIND * SIND)
+	if a == 15 {
+		z = math.Atan(math.Tan(zd) + 1)
+	}
 
-   DEK = ATN(SIND / COSD)
+	x = (math.Cos(z) - sind*math.Sin(phi)) / (cosd * math.Cos(phi))
 
-   IF A = 15 THEN Z = ATN(TAN(ZD) + 1)
+	if math.Abs(x) > 1 {
+		goto label720
+	}
 
-   X = (COS(Z) - SIND * SIN(PHI)) / (COSD * COS(PHI))
+	atnx = math.Atan(math.Sqrt(1-x*x)/x) / rad
 
-   IF ABS(X) > 1 THEN GOTO 720
+	if atnx < 0 {
+		atnx = atnx + 180
+	}
 
-   ATNX = ATN(SQR(1 - X * X) / X) / RAD
+	h = (360 - atnx) * 24 / 360
 
-   IF ATNX < 0 THEN ATNX = ATNX + 180
+	if a == 18 {
+		h = 24 - h
+	}
 
-   H = (360 - ATNX) * 24 / 360
+	if a == 12 {
+		h = 0
+	}
 
-   IF A = 18 THEN H = 24 - H
+label720:
 
-   IF A = 12 THEN H = 0
+	if a == 15 {
+		h = 24 - h
+	}
 
-   IF A = 15 THEN H = 24 - H
+	tloc = h + ra - 0.06571*t - 6.622
 
-   TLOC = H + RA - .06571 * T - 6.622
+	tloc = tloc + 24
 
-   TLOC = TLOC + 24
+	tloc = tloc - int(tloc/24)*24
 
-   TLOC = TLOC - INT(TLOC / 24) * 24
-
-   ST = TLOC - LAMD + TD
+	st = tloc - lamd + td
 
 }
