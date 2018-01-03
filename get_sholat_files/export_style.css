@@ -1,0 +1,22 @@
+body{
+	margin: 0px; padding:10px;
+	font-family: Tahoma;
+	font-size: 12px;
+}
+h3{
+	font-size: 16px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 5px;
+}
+table.table-data{
+	width: 100%;
+	border-collapse: collapse;
+}
+table.table-data tr th{
+	padding:5px; background-color: #eee;
+	font-size: 12px;
+}
+table.table-data tr td{
+	padding:5px; font-size: 12px;
+}
+a{color: #222; text-decoration: none;}
